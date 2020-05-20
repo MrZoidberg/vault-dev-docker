@@ -1,0 +1,18 @@
+{
+  "test-rsa": {
+    "type": "rsa-4096",
+    "derived": false,
+    "exportable": false,
+    "allow_plaintext_backup": false
+  },
+  "test-aes-nonconvergent": {
+    "type": "aes256-gcm96",
+    "derived": true,
+    "convergent_encryption": false
+  },
+  "test-aes-convergent": {
+    "type": "aes256-gcm96",
+    "derived": true,
+    "convergent_encryption": true
+  }
+}
