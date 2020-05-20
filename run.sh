@@ -10,6 +10,7 @@ rm -f /opt/healthcheck
 VAULT_CONFIG_DIR=/vault/config
 
 VAULT_SECRETS_FILE=${VAULT_SECRETS_FILE:-"/opt/secrets.json"}
+VAULT_TRANSIT_FILE=${VAULT_TRANSIT_FILE:-"/opt/transit.json"}
 VAULT_APP_ID_FILE=${VAULT_APP_ID_FILE:-"/opt/app-id.json"}
 VAULT_POLICIES_FILE=${VAULT_POLICIES_FILE:-"/opt/policies.json"}
 
@@ -46,6 +47,18 @@ if [[ -f "$VAULT_SECRETS_FILE" ]]; then
   done
 else
   echo "$VAULT_SECRETS_FILE not found, skipping"
+fi
+
+# parse JSON array, create transit keys
+if [[ -f "$VAULT_TRANSIT_FILE" ]]; then
+  for path in $(jq -r 'keys[]' < "$VAULT_TRANSIT_FILE"); do
+		ARGS=$(jq -rj ".\"${path}\" | to_entries | map(\"\(.key)=\(.value)\") | join(\" \")" < "$VAULT_TRANSIT_FILE")
+		CMD="vault write -f transit/keys/${path} $ARGS"
+		echo $CMD
+		$CMD
+	done
+else
+	echo "$VAULT_TRANSIT_FILE not found, skipping"
 fi
 
 # Optionally install the app id backend.
