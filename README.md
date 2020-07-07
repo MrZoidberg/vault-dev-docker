@@ -1,5 +1,7 @@
 # Vault Development Docker Image
 
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/mikhailmerkulov/vault-dev-docker)
+
 Docker image based on upstream official Vault image which allows pre-populating with
 secrets for local development/testing. DO NOT USE FOR PRODUCTION PURPOSES.
 
@@ -110,4 +112,4 @@ See https://hub.docker.com/_/vault/ for details.
 Docker Registry
 ---------------
 
-https://quay.io/dollarshaveclub/vault-dev
+[https://hub.docker.com/r/mikhailmerkulov/vault-dev-docker](https://hub.docker.com/r/mikhailmerkulov/vault-dev-docker)
